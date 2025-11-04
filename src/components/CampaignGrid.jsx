@@ -18,7 +18,7 @@ const Progress = ({ current, target }) => {
   );
 };
 
-const CampaignCard = ({ item, onDonate }) => {
+const CampaignCard = ({ item, onDonate, onView }) => {
   return (
     <div className="rounded-2xl border border-slate-200 overflow-hidden bg-white hover:shadow-md transition-shadow">
       <div className="aspect-video bg-cover bg-center" style={{ backgroundImage: `url(${item.image})` }} />
@@ -33,7 +33,10 @@ const CampaignCard = ({ item, onDonate }) => {
           <div className="flex items-center gap-1"><Timer size={14}/> {item.daysLeft} hari lagi</div>
         </div>
         <div className="mt-4 flex items-center justify-between">
-          <span className="text-sm font-medium text-emerald-700">{item.category}</span>
+          <button
+            onClick={() => onView?.(item)}
+            className="text-sm text-emerald-700 hover:underline"
+          >Detail</button>
           <button
             onClick={() => onDonate(item)}
             className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700"
@@ -46,7 +49,7 @@ const CampaignCard = ({ item, onDonate }) => {
   );
 };
 
-const CampaignGrid = ({ campaigns, onDonate }) => {
+const CampaignGrid = ({ campaigns, onDonate, onView }) => {
   return (
     <section id="campaigns" className="max-w-7xl mx-auto px-4 py-10">
       <div className="flex items-end justify-between mb-6">
@@ -57,7 +60,7 @@ const CampaignGrid = ({ campaigns, onDonate }) => {
       </div>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {campaigns.map((c) => (
-          <CampaignCard key={c.id} item={c} onDonate={onDonate} />
+          <CampaignCard key={c.id} item={c} onDonate={onDonate} onView={onView} />
         ))}
       </div>
     </section>
